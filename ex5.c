@@ -284,10 +284,12 @@ int main() {
                 break;
             }
             case EXIT: {
-                for(int i = 0; i < playlistCount; i++) {
-                    free(pl->head->data);
-                    free(pl->head);
-                    pl->head = pl->head->next;
+                PlaylistItem* current = pl->head;
+                while (current != NULL) {
+                    PlaylistItem* next = current->next;
+                    freePlaylist(current->data);
+                    free(current);
+                    current = next;
                 }
                 free(pl);
                 printf("Goodbye!\n");
@@ -452,11 +454,11 @@ void freeSong(Song* s) {
 void freePlaylist(Playlist* p) {
     for(int i = 0; i < p->songsNum; i++){
         freeSong(p->songs[i]);
-        free(p->songs);
-        free(p->name);
-        free(p);
         //printf("Playlist freed\n");
     }
+    free(p->songs);
+    free(p->name);
+    free(p);
 }
 
 void printPlaylistsOptions() {
