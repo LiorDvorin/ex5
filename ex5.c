@@ -173,6 +173,12 @@ int main() {
                         }
                         case DELETE_SONG: {
                             //print all songs in the playlist
+                            if(plTmp.head->data->songsNum == 0) {
+                                printf("choose a song to delete, or 0 to quit:\n");
+                                int garbage;
+                                scanf("%d", &garbage);
+                                break;
+                            }
                             for(int i = 0; i < plTmp.head->data->songsNum; i++) {
                                 printf("%d. Title: %s\n", i+1, plTmp.head->data->songs[i]->title);
                                 printf("  Artist: %s\n", plTmp.head->data->songs[i]->artist);
